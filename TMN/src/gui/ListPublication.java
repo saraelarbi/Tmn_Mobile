@@ -5,6 +5,7 @@
  */
 package gui;
 
+import com.codename1.components.ImageViewer;
 import com.codename1.ui.ButtonGroup;
 import com.codename1.ui.Container;
 import com.codename1.ui.Display;
@@ -46,12 +47,10 @@ public class ListPublication extends BaseForm{
      Form current;
 
     public ListPublication(Resources res) {
-        super("Publications:", BoxLayout.y());
+        super("Gestion Publications:", BoxLayout.y());
         Toolbar tb = new Toolbar(true);
         setToolbar(tb);
-        add(new Label("Ajouter Publication"));
         getTitleArea().setUIID("Container");
-        setTitle("List Publications");
         getContentPane().setScrollVisible(false);
         tb.addSearchCommand(e -> {
 
@@ -61,7 +60,7 @@ public class ListPublication extends BaseForm{
         Label s1 = new Label();
         Label s2 = new Label();
 
-      //  addTab(swipe, s1, res.getImage("cat.png"), "", "", res);
+       // addTab(swipe, s1, res.getImage("imagenotfound.png"), "", "", res);
         // deb 
         swipe.setUIID("Container");
         swipe.getContentPane().setUIID("Container");
@@ -105,11 +104,21 @@ public class ListPublication extends BaseForm{
         mesListes.setUIID("SelectBar");
         RadioButton liste = RadioButton.createToggle("", barGroup);
         liste.setUIID("SelectBar");
+        
+         Label lAjout = new Label("Ajouter");//test
+        lAjout.setUIID("NewsTopLine");
+        Style AjoutStyle = new Style(lAjout.getUnselectedStyle());
+        AjoutStyle.setFgColor(0x0bc152);
+         FontImage AjoutImage = FontImage.createMaterial(FontImage.MATERIAL_ADD, AjoutStyle);
+        lAjout.setIcon(AjoutImage); //test button
+        
+        
+        
         RadioButton partage = RadioButton.createToggle("Ajouter", barGroup);
         partage.setUIID("SelectBar");
         Label arrow = new Label(res.getImage("news-tab-down-arrow.png"), "Container");
 
-        partage.addActionListener((e) -> {
+        lAjout.addPointerPressedListener((e) -> {
             InfiniteProgress ip = new InfiniteProgress();
             final Dialog ipDlg = ip.showInifiniteBlocking();
 
@@ -137,7 +146,7 @@ public class ListPublication extends BaseForm{
             refreshTheme();
         });
         add(LayeredLayout.encloseIn(
-                GridLayout.encloseIn(3, mesListes, liste, partage),
+                GridLayout.encloseIn(3, mesListes, liste, lAjout),
                 FlowLayout.encloseBottom(arrow)
         ));
 
@@ -162,7 +171,7 @@ public class ListPublication extends BaseForm{
         });
         ArrayList<Publication> ListPub = ServicePublication.getInstance().getAllPublication();
         for (Publication Pub : ListPub) {
-            String urlImage = "cat.png";
+            String urlImage = "imagenotfound.png";
             Image PlaceHolder = Image.createImage(120, 90);
             EncodedImage enc = EncodedImage.createFromImage(PlaceHolder, false);
             URLImage urlim = URLImage.createToStorage(enc, urlImage, urlImage, URLImage.RESIZE_SCALE);
@@ -203,7 +212,7 @@ public class ListPublication extends BaseForm{
                                 )
                         )
                 );
-        swipe.addTab("", res.getImage("cat.png"), page1);
+        swipe.addTab("", res.getImage("imagenotfound.png"), page1);
     }
 
     private void bindButtonselection(Button mesListes, Label arrow) {
@@ -222,11 +231,23 @@ public class ListPublication extends BaseForm{
 
     private void addButton(Image img, Publication Pub,Resources res) {
 
-        int height = Display.getInstance().convertToPixels(11.5f);
+         int height = Display.getInstance().convertToPixels(11.5f);
         int width = Display.getInstance().convertToPixels(14f);
-
+        /*
         Button image = new Button(img.fill(width, height));
         image.setUIID("Label");
+        Label L1 = new Label("TEST"); */
+        String url = "/"+Pub.getImage_Pub();
+        EncodedImage enc=null;
+         try {
+             enc = EncodedImage.create("/"+Pub.getImage_Pub()); // file://C:/Users/ffsga/Documents/TMN/FirstProject/public/uploads/images/
+         } catch (IOException ex) {
+            
+         }
+         Image imgs = URLImage.createToStorage(enc,url, url,URLImage.RESIZE_SCALE);
+         ImageViewer   imgv = new ImageViewer(imgs);
+         Button image = new Button(imgs.fill(width, height));
+        
         Container cont = BorderLayout.west(image);
 
         Label DatePubtxt = new Label("" + Pub.getDate_Pub(), "NewsTopLine2");
@@ -238,14 +259,14 @@ public class ListPublication extends BaseForm{
          Label Images = new Label(""+Pub.getImage_Pub());
         createLineSeparator();
        
-           Image imge;
+          /* Image imge;
                 try {
-                    imge = Image.createImage("file://C:/Users/ffsga/Documents/TMN/FirstProject/public/uploads/images/"+Pub.getImage_Pub()).scaledWidth(Math.round(Display.getInstance().getDisplayWidth()));
+                    imge = Image.createImage("file://C:/Users/ffsga/Documents/TMN/FirstProject/public/uploads/images/1b53b5931e8fafdb7db7dbd54e866da7.jpg").scaledWidth(Math.round(Display.getInstance().getDisplayWidth()));
                                         Images.setIcon(img);
                                         
 
                 } catch (IOException ex) {
-                } 
+                }  */
         //supprimer
         Label lsup = new Label("");
         lsup.setUIID("NewsTopLine");
@@ -273,7 +294,7 @@ public class ListPublication extends BaseForm{
         Label lModifier = new Label("");
         lModifier.setUIID("NewsTopLine");
         Style ModifierStyle = new Style(lModifier.getUnselectedStyle());
-        ModifierStyle.setFgColor(0xf21f1f);
+        ModifierStyle.setFgColor(0x0bc152);
 
         FontImage ModifierImage = FontImage.createMaterial(FontImage.MATERIAL_MODE_EDIT, ModifierStyle);
         lModifier.setIcon(ModifierImage);

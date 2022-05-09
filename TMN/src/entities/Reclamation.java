@@ -10,8 +10,8 @@ package entities;
  * @author ffsga
  */
 public class Reclamation {
-    private int idReclamation;
-    private int idU;
+    private int idreclamation;
+    private int idu;
     private String description;
     private int idPub;
     private int idPod;
@@ -21,9 +21,9 @@ public class Reclamation {
     public Reclamation() {
     }
 
-    public Reclamation(int idReclamation, int idU, String description, int idPub, int idPod, int idBlog, String etat) {
-        this.idReclamation = idReclamation;
-        this.idU = idU;
+    public Reclamation(int idreclamation, int idu, String description, int idPub, int idPod, int idBlog, String etat) {
+        this.idreclamation = idreclamation;
+        this.idu = idu;
         this.description = description;
         this.idPub = idPub;
         this.idPod = idPod;
@@ -31,44 +31,35 @@ public class Reclamation {
         this.etat = etat;
     }
 
-    public Reclamation(int idU, String description, int idPub, int idPod, int idBlog, String etat) {
-        this.idU = idU;
-        this.description = description;
-        this.idPub = idPub;
-        this.idPod = idPod;
-        this.idBlog = idBlog;
-        this.etat = etat;
-    }
-
-    public Reclamation(int idReclamation, int idU, String description, int idPub, String etat) {
-        this.idReclamation = idReclamation;
-        this.idU = idU;
+    public Reclamation(int idreclamation, int idu, String description, int idPub, String etat) {
+        this.idreclamation = idreclamation;
+        this.idu = idu;
         this.description = description;
         this.idPub = idPub;
         this.etat = etat;
     }
 
-    public Reclamation(int idU, String description, int idPub, String etat) {
-        this.idU = idU;
+    public Reclamation(int idu, String description, int idPub, String etat) {
+        this.idu = idu;
         this.description = description;
         this.idPub = idPub;
         this.etat = etat;
     }
 
-    public int getIdReclamation() {
-        return idReclamation;
+    public int getIdreclamation() {
+        return idreclamation;
     }
 
-    public void setIdReclamation(int idReclamation) {
-        this.idReclamation = idReclamation;
+    public void setIdreclamation(int idreclamation) {
+        this.idreclamation = idreclamation;
     }
 
-    public int getIdU() {
-        return idU;
+    public int getIdu() {
+        return idu;
     }
 
-    public void setIdU(int idU) {
-        this.idU = idU;
+    public void setIdu(int idu) {
+        this.idu = idu;
     }
 
     public String getDescription() {
@@ -113,8 +104,10 @@ public class Reclamation {
 
     @Override
     public String toString() {
-        return "Reclamation{" + "idReclamation=" + idReclamation + ", idU=" + idU + ", description=" + description + ", idPub=" + idPub + ", idPod=" + idPod + ", idBlog=" + idBlog + ", etat=" + etat + '}';
+        return "Reclamation{" + "idreclamation=" + idreclamation + ", idu=" + idu + ", description=" + description + ", idPub=" + idPub + ", idPod=" + idPod + ", idBlog=" + idBlog + ", etat=" + etat + '}';
     }
+
+   
     
     
 }
