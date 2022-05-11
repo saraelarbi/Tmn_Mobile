@@ -159,13 +159,13 @@ Tabs swipe = new Tabs();
         TextField titrePub = new TextField(Pub.getTitre_Pub() , "TirePub" , 20 , TextField.ANY);
         TextField descPub = new TextField(Pub.getDesc_Pub() , "Description" , 20 , TextField.ANY);
         TextField sourcePub = new TextField(String.valueOf(Pub.getSource_Pub()) , "Etat" , 20 , TextField.ANY);
-        ComboBox CatPubCombo = new ComboBox("Sport","Politique","Santé","Affaire","Monde");
+        ComboBox CatPubCombo = new ComboBox();
         
-       /* CatPubCombo.addItem("Sport");
+        CatPubCombo.addItem("Sport");
         CatPubCombo.addItem("Politique");
         CatPubCombo.addItem("Santé");
         CatPubCombo.addItem("Affaire");
-        CatPubCombo.addItem("Monde"); */
+        CatPubCombo.addItem("Monde"); 
         
         
         if("Sport".equals(Pub.getCategorie_Pub()) ) {

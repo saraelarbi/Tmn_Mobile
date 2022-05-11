@@ -6,11 +6,14 @@
         <group>
             <file>file:/C:/Users/ffsga/Desktop/PidevTMNmobile/TMN/src/com/mycompany/myapp/MyApplication.java</file>
             <file>file:/C:/Users/ffsga/Desktop/PidevTMNmobile/TMN/src/gui/BaseForm.java</file>
+            <file>file:/C:/Users/ffsga/Desktop/PidevTMNmobile/TMN/src/gui/ModifierReclamation.java</file>
             <file>file:/C:/Users/ffsga/Desktop/PidevTMNmobile/TMN/src/gui/ListPublication.java</file>
-            <file>file:/C:/Users/ffsga/Desktop/PidevTMNmobile/TMN/src/gui/NewsfeedForm.java</file>
             <file>file:/C:/Users/ffsga/Desktop/PidevTMNmobile/TMN/src/utils/Statics.java</file>
             <file>file:/C:/Users/ffsga/Desktop/PidevTMNmobile/TMN/src/services/ServicePublication.java</file>
+            <file>file:/C:/Users/ffsga/Desktop/PidevTMNmobile/TMN/src/entities/Reclamation.java</file>
+            <file>file:/C:/Users/ffsga/Desktop/PidevTMNmobile/TMN/src/services/ServiceReclamation.java</file>
             <file>file:/C:/Users/ffsga/Desktop/PidevTMNmobile/TMN/src/gui/AddPublication.java</file>
+            <file>file:/C:/Users/ffsga/Desktop/PidevTMNmobile/TMN/src/gui/ListReclamation.java</file>
             <file>file:/C:/Users/ffsga/Desktop/PidevTMNmobile/TMN/src/gui/ModifierPublication.java</file>
         </group>
     </open-files>

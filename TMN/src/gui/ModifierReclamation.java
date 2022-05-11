@@ -6,11 +6,9 @@
 package gui;
 
 import com.codename1.components.InfiniteProgress;
-import com.codename1.components.ScaleImageLabel;
-import com.codename1.components.SpanLabel;
-import com.codename1.l10n.SimpleDateFormat;
 import com.codename1.ui.Button;
 import com.codename1.ui.ButtonGroup;
+import com.codename1.ui.ComboBox;
 import com.codename1.ui.Component;
 import com.codename1.ui.Container;
 import com.codename1.ui.Dialog;
@@ -29,32 +27,32 @@ import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.layouts.GridLayout;
 import com.codename1.ui.layouts.LayeredLayout;
-import com.codename1.ui.plaf.UIManager;
-import com.codename1.ui.spinner.Picker;
 import com.codename1.ui.util.Resources;
-import entities.Publication;
-import services.ServicePublication;
-import com.codename1.ui.plaf.Style;
+import entities.Reclamation;
+import services.ServiceReclamation;
 
 /**
  *
  * @author ffsga
  */
-public class AddPublication extends BaseForm{
-     Form current;
-
-    public AddPublication(Resources res) {
-        super("NewsFeed", BoxLayout.y());
+public class ModifierReclamation extends BaseForm{
+    
+    Form current;
+    public ModifierReclamation(Resources res , Reclamation Rec) {
+         super("Modifier une Reclamation",BoxLayout.y()); //herigate men Newsfeed w l formulaire vertical
+    
         Toolbar tb = new Toolbar(true);
+        current = this ;
         setToolbar(tb);
         getTitleArea().setUIID("Container");
-        setTitle("Ajouter une Publication");
         getContentPane().setScrollVisible(false);
         tb.addSearchCommand(e -> {
-
         });
-
-        Tabs swipe = new Tabs();
+        
+        
+//        super.addSideMenu(res);
+        
+Tabs swipe = new Tabs();
         Label s1 = new Label();
         Label s2 = new Label();
 
@@ -152,71 +150,66 @@ public class AddPublication extends BaseForm{
         addOrientationListener(e -> {
             updateArrowPosition(barGroup.getRadioButton(barGroup.getSelectedIndex()), arrow);
         });
-
-        //fin
-        Picker date_Pub = new Picker();
-        date_Pub.setType(Display.PICKER_TYPE_DATE);
-        date_Pub.setUIID("TextFieldBlack");
-        addStringValue("Date Pub ", date_Pub);
+      
+        TextField Desc = new TextField(Rec.getDescription(), "Description: " , 20 , TextField.ANY);
+        TextField idPb = new TextField(Integer.toString(Rec.getIdPub()), "IdPub: " , 20 , TextField.ANY);
+        ComboBox EtatCombo = new ComboBox();
+         EtatCombo.addItem("traité");
+        EtatCombo.addItem("en cours");
+        EtatCombo.addItem("non traité");
         
-        TextField titre_Pub = new TextField("", "titre_Pub");
-        titre_Pub.setUIID("TextFieldBlack");
-        addStringValue("titre_Pub : ", titre_Pub);
+      
         
-        TextField desc_Pub = new TextField("", "desc_Pub");
-        desc_Pub.setUIID("TextFieldBlack");
-        addStringValue("desc_Pub : ", desc_Pub);
+        if("traité".equals(Rec.getEtat()) ) {
+            EtatCombo.setSelectedIndex(0);
+        }
+        else if("en cours".equals(Rec.getEtat()) ) {
+            EtatCombo.setSelectedIndex(1);
+        }
+        else if("en cours".equals(Rec.getEtat()) ) {
+            EtatCombo.setSelectedIndex(2);
+        }
         
-         TextField source_Pub = new TextField("", "source_Pub");
-        source_Pub.setUIID("TextFieldBlack");
-        addStringValue("source_Pub : ", source_Pub);
+        Desc.setUIID("NewsTopLine");
+        idPb.setUIID("NewsTopLine");
+        EtatCombo.setUIID("NewsTopLine");
+
+        Desc.setSingleLineTextArea(true);
+        idPb.setSingleLineTextArea(true);
         
-         TextField categorie_Pub = new TextField("", "categorie_Pub");
-        categorie_Pub.setUIID("TextFieldBlack");
-        addStringValue("categorie_Pub : ", categorie_Pub);
-        
-                                       
-
-        Button btnAjouter = new Button("Ajouter");
-        addStringValue("", btnAjouter);
-
-        Button btnAnnuler = new Button("Annuler");
-        addStringValue("", btnAnnuler);
-
-        btnAnnuler.addActionListener((e) -> {
-            Resources theme;
-            theme = UIManager.initFirstTheme("/theme");
-          
-            new ListPublication(theme).show();
-        });
-
-        btnAjouter.addActionListener((e) -> {
+         addStringValue("Description: ", Desc);
+         addStringValue("id_Pub : ", idPb);
+         addStringValue("Etat : ", EtatCombo);
+         
+        Button btnModifier = new Button("Modifier");
+        btnModifier.setUIID("Button");
+        addStringValue("", btnModifier);
+       
+       //Event onclick btnModifer
+       
+            btnModifier.addPointerPressedListener((e) -> {
             try {
-                if (titre_Pub.getText().equals("") || desc_Pub.getText().equals("") || source_Pub.getText().equals("") || categorie_Pub.getText().equals("")) {
+                if (Desc.getText().equals("") || idPb.getText().equals("") )  {
                     Dialog.show("Erreur", "Veuillez vérifier les données ", "Annuler", "OK");
                 } else {
                     InfiniteProgress ip = new InfiniteProgress();
                     final Dialog iDialog = ip.showInfiniteBlocking();
                     
-                    Publication Pub = new Publication();
+                    
                    
-                    Pub.setDate_Pub(date_Pub.getDate()); 
-                    Pub.setTitre_Pub(titre_Pub.getText());
-                    Pub.setDesc_Pub(desc_Pub.getText());
-                    Pub.setSource_Pub(source_Pub.getText());
-                    Pub.setCategorie_Pub(categorie_Pub.getText());
-                                       
-
-                    Pub.setImage_Pub("b4b1cddd0a0a6d142380cfd657ad12e5.jpg");
-                   
+                    Rec.setDescription(Desc.getText());
+                    Rec.setIdu(Rec.getIdu());
+                    Rec.setIdPub(Rec.getIdPub());
+                    Rec.setEtat((String)EtatCombo.getSelectedItem());
+                    
 //                    
 //               Sms SMS=new Sms();
 //     SMS.SendSMS("un nouvel Evénement a été ajouté, veuillez consulter notre application pour plus de détails");
 //                   
 
-                    ServicePublication.getInstance().AddPublication(Pub);
+                    ServiceReclamation.getInstance().modifierReclamation(Rec);
                     iDialog.dispose();
-                    new ListPublication(res).show();
+                    new ListReclamation(res).show();
                 }
             } catch (Exception ex) {
             }
@@ -224,45 +217,16 @@ public class AddPublication extends BaseForm{
 
         this.getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK,
                 e -> current.showBack()); // Revenir vers l'interface précédente
-
+        
+        
     }
-
+    
     private void addStringValue(String s, Component V) {
         add(BorderLayout.west(new Label(s, "PaddedLabel")).add(BorderLayout.CENTER, V));
         add(createLineSeparator(0xeeeeee));
 
     }
-
-    private void addTab(Tabs swipe, Label spacer, Image image, String string, String text, Resources res) {
-        int size = Math.min(Display.getInstance().getDisplayWidth(), Display.getInstance().getDisplayHeight());
-
-        if (image.getHeight() < size) {
-            image = image.scaledHeight(size);
-        }
-
-        if (image.getHeight() > Display.getInstance().getDisplayHeight() / 2) {
-            image = image.scaledHeight(Display.getInstance().getDisplayHeight() / 2);
-
-        }
-        ScaleImageLabel imageScale = new ScaleImageLabel(image);
-        imageScale.setUIID("Container");
-        imageScale.setBackgroundType(Style.BACKGROUND_IMAGE_SCALED_FILL);
-
-        Label overLay = new Label("", "ImageOverlay");
-        Container page1
-                = LayeredLayout.encloseIn(
-                        imageScale,
-                        overLay,
-                        BorderLayout.south(
-                                BoxLayout.encloseY(
-                                        new SpanLabel(text, "LargeWhiteText"),
-                                        spacer
-                                )
-                        )
-                );
-        swipe.addTab("", res.getImage("event.png"), page1);
-    }
-
+    
     private void bindButtonselection(Button mesListes, Label arrow) {
         mesListes.addActionListener(e -> {
             if (mesListes.isSelected()) {

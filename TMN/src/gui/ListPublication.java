@@ -108,14 +108,20 @@ public class ListPublication extends BaseForm{
          Label lAjout = new Label("Ajouter");//test
         lAjout.setUIID("NewsTopLine");
         Style AjoutStyle = new Style(lAjout.getUnselectedStyle());
-        AjoutStyle.setFgColor(0x0bc152);
+        AjoutStyle.setFgColor(0x001eff);
          FontImage AjoutImage = FontImage.createMaterial(FontImage.MATERIAL_ADD, AjoutStyle);
         lAjout.setIcon(AjoutImage); //test button
         
+        Label lpieChart = new Label("Pie Chart");//test
+        lpieChart.setUIID("NewsTopLine");
+        Style lpieChartStyle = new Style(lpieChart.getUnselectedStyle());
+        lpieChartStyle.setFgColor(0x760299);
+         FontImage AjoutImagePieChart = FontImage.createMaterial(FontImage.MATERIAL_PIE_CHART, lpieChartStyle);
+        lpieChart.setIcon(AjoutImagePieChart); //test button
         
         
-        RadioButton partage = RadioButton.createToggle("Ajouter", barGroup);
-        partage.setUIID("SelectBar");
+        RadioButton Ajouter = RadioButton.createToggle("Ajouter", barGroup);
+        Ajouter.setUIID("SelectBar");
         Label arrow = new Label(res.getImage("news-tab-down-arrow.png"), "Container");
 
         lAjout.addPointerPressedListener((e) -> {
@@ -124,6 +130,14 @@ public class ListPublication extends BaseForm{
 
            AddPublication a = new AddPublication(res);
             a.show();
+            refreshTheme();
+        });
+        lpieChart.addPointerPressedListener((e) -> {
+            InfiniteProgress ip = new InfiniteProgress();
+            final Dialog ipDlg = ip.showInifiniteBlocking();
+
+           StatistiquePieForm p = new StatistiquePieForm(res);
+            p.show();
             refreshTheme();
         });
         
@@ -146,15 +160,15 @@ public class ListPublication extends BaseForm{
             refreshTheme();
         });
         add(LayeredLayout.encloseIn(
-                GridLayout.encloseIn(3, mesListes, liste, lAjout),
+                GridLayout.encloseIn(3, mesListes, lAjout,lpieChart),
                 FlowLayout.encloseBottom(arrow)
         ));
 
-        partage.setSelected(true);
+        Ajouter.setSelected(true);
         arrow.setVisible(false);
         addShowListener(e -> {
             arrow.setVisible(true);
-            updateArrowPosition(partage, arrow);
+            updateArrowPosition(Ajouter, arrow);
         });
         mesListes.setSelected(true);
         arrow.setVisible(false);
@@ -164,7 +178,7 @@ public class ListPublication extends BaseForm{
         });
         bindButtonselection(mesListes, arrow);
         bindButtonselection(liste, arrow);
-        bindButtonselection(partage, arrow);
+        bindButtonselection(Ajouter, arrow);
         //   special case for rotation
         addOrientationListener(e -> {
             updateArrowPosition(barGroup.getRadioButton(barGroup.getSelectedIndex()), arrow);

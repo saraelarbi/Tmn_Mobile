@@ -72,8 +72,9 @@ public class ServiceReclamation {
                     
                 float id = Float.parseFloat(obj.get("idreclamation").toString());                        
                 recs.setIdreclamation((int)id); 
-                // float id1 = Float.parseFloat(obj.get("idu").toString());                        
-                recs.setIdu(1); 
+                // float id1 = Float.parseFloat(obj.get("idu").toString())
+                String strIdU = (obj.get("idu").toString());;                        
+                recs.setIdu((int)Float.parseFloat(strIdU.substring(strIdU.indexOf("=")+1,strIdU.indexOf(",")))); 
                 recs.setDescription(obj.get("description").toString());
                 
                 String strID = (obj.get("idpub").toString());
@@ -92,17 +93,9 @@ public class ServiceReclamation {
 
         return Reclamations;
     }
-    public Publication makePub(Map<String, Object> obj) {
-        if (obj == null) {
-            return null;
-        }
-        Publication publication = new Publication();
-        publication.setIdPub((int) Float.parseFloat(obj.get("idPub").toString()));
-        return publication;
-    }
-
     
-    public ArrayList<Reclamation> getAllReclamation() {
+
+        public ArrayList<Reclamation> getAllReclamation() {
         String url = Statics.BASE_URL + "/reclamation/displayJSON/";
         req.setUrl(url);
         req.setPost(false);
@@ -142,7 +135,7 @@ public class ServiceReclamation {
     
     public void modifierReclamation(Reclamation rec) {
         ConnectionRequest con = new ConnectionRequest();
-        String url = Statics.BASE_URL + "/reclamation/updateJSON/"+rec.getIdreclamation()+"?description=" + rec.getDescription() + "&idu=" + rec.getIdu() + "&idPub=" + rec.getIdPub() + "&idPod=" + rec.getIdPod() + "&idBlog=" + rec.getIdBlog() + "&etat=" + rec.getEtat();
+        String url = Statics.BASE_URL + "/reclamation/updateJSON/"+rec.getIdreclamation()+"?description=" + rec.getDescription() + "&idu=" + rec.getIdu() + "&idPub=" + rec.getIdPub() + "&idPod="+null+"&idBlog="+null+ "&etat=" + rec.getEtat();
         con.setUrl(url);
         con.addResponseListener((e) -> {
             String str = new String(con.getResponseData());

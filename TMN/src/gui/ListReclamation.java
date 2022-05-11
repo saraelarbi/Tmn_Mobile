@@ -251,8 +251,8 @@ public class ListReclamation extends BaseForm{
         lModifier.setIcon(ModifierImage);
         lModifier.setTextPosition(LEFT);
         lModifier.addPointerPressedListener(l -> {
-            //System.out.println("hello update");
-          //  new ModifierReclamation(res,Rec).show(); // yhezek modifier
+            
+            new ModifierReclamation(res,Rec).show(); 
         });
     
         cont.add(BoxLayout.encloseY(

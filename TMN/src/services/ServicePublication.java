@@ -35,7 +35,7 @@ public class ServicePublication {
     public boolean resultOK = true;
     private ConnectionRequest req;
 
-    private ServicePublication() {
+    public ServicePublication() {
         req = new ConnectionRequest();
     }
 
