@@ -5,16 +5,20 @@
  */
 package gui;
 
+import com.codename1.capture.Capture;
 import com.codename1.components.InfiniteProgress;
 import com.codename1.components.ScaleImageLabel;
 import com.codename1.components.SpanLabel;
+import com.codename1.io.FileSystemStorage;
 import com.codename1.l10n.SimpleDateFormat;
 import com.codename1.ui.Button;
+import com.codename1.datatransfer.DropTarget;
 import com.codename1.ui.ButtonGroup;
 import com.codename1.ui.Component;
 import com.codename1.ui.Container;
 import com.codename1.ui.Dialog;
 import com.codename1.ui.Display;
+import com.codename1.ui.Font;
 import com.codename1.ui.FontImage;
 import com.codename1.ui.Form;
 import com.codename1.ui.Graphics;
@@ -29,12 +33,15 @@ import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.layouts.GridLayout;
 import com.codename1.ui.layouts.LayeredLayout;
+import com.codename1.ui.plaf.RoundBorder;
 import com.codename1.ui.plaf.UIManager;
 import com.codename1.ui.spinner.Picker;
 import com.codename1.ui.util.Resources;
 import entities.Publication;
 import services.ServicePublication;
 import com.codename1.ui.plaf.Style;
+import java.io.IOException;
+
 
 /**
  *
@@ -42,6 +49,8 @@ import com.codename1.ui.plaf.Style;
  */
 public class AddPublication extends BaseForm{
      Form current;
+     String Imagecode;
+   String path="";
 
     public AddPublication(Resources res) {
         super("NewsFeed", BoxLayout.y());
@@ -175,6 +184,24 @@ public class AddPublication extends BaseForm{
         categorie_Pub.setUIID("TextFieldBlack");
         addStringValue("categorie_Pub : ", categorie_Pub);
         
+        Button btCapture = new Button("Choisir Image");
+        addStringValue("", btCapture);
+        Label image = new Label();
+        
+        btCapture.addActionListener(e->{
+        path = Capture.capturePhoto(Display.getInstance().getDisplayWidth(), -1);
+          
+          if(path != null ){
+              try {
+                  Image img = Image.createImage(path);
+                  image.setIcon(img);
+                  this.revalidate();
+              } catch (IOException ex) {
+                  ex.getStackTrace();
+              }
+              
+          }
+        });
                                        
 
         Button btnAjouter = new Button("Ajouter");
@@ -205,9 +232,8 @@ public class AddPublication extends BaseForm{
                     Pub.setDesc_Pub(desc_Pub.getText());
                     Pub.setSource_Pub(source_Pub.getText());
                     Pub.setCategorie_Pub(categorie_Pub.getText());
-                                       
-
-                    Pub.setImage_Pub("b4b1cddd0a0a6d142380cfd657ad12e5.jpg");
+                   // Pub.setImage_Pub(path);
+                    Pub.setImage_Pub("049eab6d8a3c409213a7eeeb49b49a5c.jpg");
                    
 //                    
 //               Sms SMS=new Sms();

@@ -27,6 +27,7 @@ import com.codename1.ui.Component;
 import com.codename1.ui.Dialog;
 import com.codename1.ui.EncodedImage;
 import com.codename1.ui.FontImage;
+import com.codename1.ui.TextField;
 import com.codename1.ui.URLImage;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.layouts.BorderLayout;
@@ -45,16 +46,16 @@ import services.ServicePublication;
 public class ListPublication extends BaseForm{
     
      Form current;
-
+     Toolbar tb = getToolbar();
     public ListPublication(Resources res) {
         super("Gestion Publications:", BoxLayout.y());
         Toolbar tb = new Toolbar(true);
         setToolbar(tb);
         getTitleArea().setUIID("Container");
         getContentPane().setScrollVisible(false);
-        tb.addSearchCommand(e -> {
-
-        });
+//        tb.addSearchCommand(e -> {
+//
+//        });
 
         Tabs swipe = new Tabs();
         Label s1 = new Label();
@@ -194,6 +195,35 @@ public class ListPublication extends BaseForm{
             ScaleImageLabel image = new ScaleImageLabel(urlim);
             Container contImage = new Container();
             image.setBackgroundType(Style.BACKGROUND_IMAGE_SCALED_FILL);
+            
+             //Recherche
+        TextField searchField;
+searchField = new TextField("", "rechercher...");
+//searchField.getHintLabel().setUIID("Title");
+//searchField.setUIID("Title");
+//tb.setGlobalToolbar(true);
+tb.setTitleComponent(searchField);
+//if field content changed
+searchField.addDataChangeListener((i1, i2) -> {
+String t = searchField.getText();
+if(t.length() < 1) {
+for(Component cmp : getContentPane()) {
+cmp.setHidden(false);
+cmp.setVisible(true);
+}
+} else {
+t = t.toLowerCase();
+for(Component cmp: getContentPane()) {
+//tekhou el val ta3 el champ : champ li 3malt 3lih el recherche type span label (emplacement : container->container->spanlabel )
+String val = ((Label) ((Container)((Container) cmp).getComponentAt(0)).getComponentAt(0)).getText();
+System.out.println( val );
+boolean show = val != null && val.toLowerCase().indexOf(t) > -1;
+cmp.setHidden(!show);
+cmp.setVisible(show);
+}
+}
+getContentPane().animateLayout(250);
+});
 
         }
 
@@ -318,6 +348,8 @@ public class ListPublication extends BaseForm{
             new ModifierPublication(res,Pub).show();
         });
     
+       
+           //appel container 
         cont.add(BorderLayout.CENTER, BoxLayout.encloseY(
                 BoxLayout.encloseX(DatePubtxt),
                 BoxLayout.encloseX(TitrePubtxt),
@@ -326,7 +358,9 @@ public class ListPublication extends BaseForm{
                 BoxLayout.encloseX(CategoriePubtxt,lModifier, lsup)));
 
         add(cont);
+        }  
+    
 
-    }
+
     
 }

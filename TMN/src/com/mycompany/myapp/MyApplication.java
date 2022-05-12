@@ -13,6 +13,7 @@ import com.codename1.ui.Toolbar;
 import java.io.IOException;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.io.NetworkEvent;
+import gui.FrontPublication;
 import gui.ListPublication;
 import gui.ListReclamation;
 import gui.StatistiquePieForm;
@@ -54,10 +55,12 @@ public class MyApplication {
             current.show();
             return;
         }
-          new  ListPublication(theme).show();
+         // new  ListPublication(theme).show();
          // new  ListReclamation(theme).show
                   
          // new StatistiquePieForm(theme).show();
+         
+          new FrontPublication(theme).show(); //front
     }
 
     public void stop() {

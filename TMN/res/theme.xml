@@ -136,7 +136,7 @@
         <val key="Button.sel#padUnit" value="2,2,2,2" />
         <val key="Button.sel#padding" value="1.0,1.0,1.0,1.0" />
         <val key="Button.sel#transparency" value="0" />
-        <val key="Button.transparency" value="0" />
+        <val key="Button.transparency" value="100" />
         <val key="CalendarDate.bgColor" value="ff0033" />
         <val key="CalendarDate.fgColor" value="0" />
         <val key="CalendarDate.margin" value="0.0,0.0,0.0,0.0" />
